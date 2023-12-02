@@ -56,7 +56,7 @@
 										<?php endif ?>
 
                                     </td>
-                                    <td><?= $k->terjual; ?> </td>
+                                    <td><?= $k->jumlah; ?> </td>
 								</tr>
 							<?php endforeach ?>
 						</tbody>

@@ -683,7 +683,7 @@ foreach ($d_order_d as $key => $value)
             // --------------------------- Example 2 ---------------------------
             var sked2Config = {
               caption: 'Terapis',
-              start: today(10, 0),
+              start: today(8, 0),
               end: today(18, 0),
               showEventTime: true,
               showEventDuration: true,

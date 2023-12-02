@@ -16,9 +16,11 @@ class Login extends CI_Controller {
 		if ($this->form_validation->run() == false) {			
 			$data['title'] = "Agrika Login";
 
-			$this->load->view('tema/Header2', $data);
-			$this->load->view('login/login', $data);
-			$this->load->view('tema/Footer2');
+// 			$this->load->view('tema/Header2', $data);
+// 			$this->load->view('login/login', $data);
+// 			$this->load->view('tema/Footer2');
+			
+			$this->load->view('login/login_new', $data);
 
 		}else {  
 			$username = $this->input->post('username');
@@ -26,7 +28,21 @@ class Login extends CI_Controller {
 			// password_verify($password, $oper['password'])
 
 			$oper = $this->db->get_where('view_user', ['username' => $username])->row_array();
+
+			
+
 			if($oper){
+			    
+			    $user = $this->db->get_where('tb_user',['username'=>$username])->row_array();
+
+    			$data_permission = $this->db->join('tb_sub_menu','tb_permission.permission = tb_sub_menu.id_sub_menu')->get_where('tb_permission',['id_user' => $user['kd_user']])->result_array();
+    			// var_dump($user);
+    			$permission = [];
+    			foreach($data_permission as $d){
+    				$permission [] = $d['permission'];
+    				$dt_menu [] = $d['id_menu'];
+    			}
+			    
 				if($oper['aktif'] == 1){
 					if(password_verify($password, $oper['password'])){
 						$data = [
@@ -39,6 +55,8 @@ class Login extends CI_Controller {
 							'e_grade' 	 => $oper['e_grade'],
 							'gudang' 	 => $oper['gudang'],
 							'id_role'    => $oper['id_role'],
+							'permission' => $permission,
+							'dt_menu' => $dt_menu,
 							'salon'      => 'salon'
 						];
 						switch ($oper['id_role']) {
@@ -85,7 +103,7 @@ class Login extends CI_Controller {
 				}
 			}else{
 				echo "<script> alert('Anda Belum Terdaftar!');
-				window.location='".base_url('Login/regis')."';
+				window.location='".base_url('Login')."';
 				</script>";      
 			}	
 		}
@@ -93,43 +111,43 @@ class Login extends CI_Controller {
 
 
 
-	function regis(){
-		$this->form_validation->set_rules('nm_user','nm_user','required|trim', ['required' => 'Nama tidak boleh kosong!']);
-		$this->form_validation->set_rules('username','username','required|trim', ['required' => 'Username tidak boleh kosong!']);
-		$this->form_validation->set_rules('password','password','required|trim|min_length[5]',
-			[
-				'required' => 'Password tidak boleh kosong!',
-				'min_length' => 'Password Kurang Panjang'
-			]);
+	// function regis(){
+	// 	$this->form_validation->set_rules('nm_user','nm_user','required|trim', ['required' => 'Nama tidak boleh kosong!']);
+	// 	$this->form_validation->set_rules('username','username','required|trim', ['required' => 'Username tidak boleh kosong!']);
+	// 	$this->form_validation->set_rules('password','password','required|trim|min_length[5]',
+	// 		[
+	// 			'required' => 'Password tidak boleh kosong!',
+	// 			'min_length' => 'Password Kurang Panjang'
+	// 		]);
 	
-		if ($this->form_validation->run() == false) {			
-			$data['title'] = "Agrika Login";
+	// 	if ($this->form_validation->run() == false) {			
+	// 		$data['title'] = "Agrika Login";
 
-			$this->load->view('tema/Header2', $data);
-			$this->load->view('login/regis');
-			$this->load->view('tema/Footer2');
+	// 		$this->load->view('tema/Header2', $data);
+	// 		$this->load->view('login/regis');
+	// 		$this->load->view('tema/Footer2');
 
-		}else {  
-			$this->input_regis();
-		}	
-	}
+	// 	}else {  
+	// 		$this->input_regis();
+	// 	}	
+	// }
 
-	function input_regis(){
-		$data_input = [
-			'nm_user' 	=> $this->input->post('nm_user'),
-			'username' 	=> $this->input->post('username'),
-			'password' 	=> password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-			'tgl_masuk' => date('Y-m-d'),
-			'aktif' 	=> '0',
-			'warna' 	=> '#BCF9BC',
-			'id_role' 	=> '2'
-		];
+	// function input_regis(){
+	// 	$data_input = [
+	// 		'nm_user' 	=> $this->input->post('nm_user'),
+	// 		'username' 	=> $this->input->post('username'),
+	// 		'password' 	=> password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+	// 		'tgl_masuk' => date('Y-m-d'),
+	// 		'aktif' 	=> '0',
+	// 		'warna' 	=> '#BCF9BC',
+	// 		'id_role' 	=> '2'
+	// 	];
 
-		$res = $this->M_salon->InputData('tb_user', $data_input);
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">User Berhasil Di Tambah</div>');
-        $this->session->set_flashdata('message', '<div style="background-color: #FFA07A;" class="alert" role="alert">User Berhasil Di Tambah !! <div class="ml-5 btn btn-sm"></div></div>');
-		redirect ('Login');
-	}
+	// 	$res = $this->M_salon->InputData('tb_user', $data_input);
+	// 	$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">User Berhasil Di Tambah</div>');
+    //     $this->session->set_flashdata('message', '<div style="background-color: #FFA07A;" class="alert" role="alert">User Berhasil Di Tambah !! <div class="ml-5 btn btn-sm"></div></div>');
+	// 	redirect ('Login');
+	// }
 
 	function logout(){
 		unset(
@@ -139,7 +157,7 @@ class Login extends CI_Controller {
 			$_SESSION['beda'],
 			$_SESSION['id_role']
 		);  
-        $this->session->set_flashdata('message', '<div style="background-color: #FFA07A;" class="alert" role="alert">Logout Sukses !! <div class="ml-5 btn btn-sm"><i class="fas fa-exclamation-triangle fa-2x"></i></div></div>');
+        $this->session->set_flashdata('message', '<div style="background-color: #FADADD;" class="alert" role="alert">Logout Sukses !! </div>');
 		redirect('Login');
 	}
 

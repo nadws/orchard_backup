@@ -1,4 +1,4 @@
-<a href="../../"><i class="fas fa-home fa-4x"></i></a> 
+<a href="../../"><img src="<?= base_url('asset/');?>orchard_small2.png"width="200"></a> 
 <div class="login-box" style="font-size: 18px;">
   <div class="login-logo panel-default">
     <a href=""><b>Login Orchard</b></a>
@@ -18,7 +18,7 @@
         </div>
         <?= form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
         <div class="row form-group last">
-          <button type="submit" class="btn btn-block" style="background-color:#FFA07A;">Login</button>
+          <button type="submit" class="btn btn-block" style="background-color:#FADADD;">Login</button>
           <br>
         </div>
       </form>

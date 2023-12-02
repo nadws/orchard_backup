@@ -35,14 +35,16 @@
 			?>
 			<div class="col-sm-12">
 				<a href="<?= base_url() ?>match/order" class="btn btn-warning"><i class="fa fa-arrow-left"></i> Kembali</a>
-				<button data-toggle="modal" data-target="#modal-view" class="btn btn-success"><i class="fas fa-eye"></i> View</button><br><br>
+				<button data-toggle="modal" data-target="#modal-view" class="btn btn-success"><i class="fas fa-eye"></i> View</button>
+				<button data-toggle="modal" data-target="#modal-summary" class="btn btn-success"><i class="fas fa-print"></i> Summary</button><br><br>
 				<div class="card">
 					<div class="card-body">
 						<div class="table-responsive">
-							<table id="example1" class="table">
+							<table id="example1" class="table text-sm">
 								<thead>
 									<tr>
 										<th>NO.</th>
+										<th>No Nota</th>
 										<th>PENJUAL</th>
 										<th>TANGGAL</th>
 										<th>PRODUK</th>
@@ -51,8 +53,6 @@
 										<th>HARGA</th>
 										<th>DISKON</th>
 										<th>TOTAL</th>
-										<th>PEMBAYARAN</th>
-										<th>CATATAN</th>
 										<th>ADMIN</th>
 									</tr>
 								</thead>
@@ -60,16 +60,15 @@
 									<?php foreach ($list as $key => $value): ?>
 										<tr>
 											<td><?= $key+1 ?></td>
-											<td><?= $value->nm_kry ?></td>
-											<td><?= date('D-m-Y', strtotime($value->tanggal)) ?></td>
+											<td><a href="<?= base_url(); ?>match/detail_invoice?invoice=<?= $value->no_nota; ?>"><?= $value->no_nota; ?></a></td>
+											<td><?= $value->nm_karyawan ?></td>
+											<td><?= date('d/m/Y', strtotime($value->tanggal)) ?></td>
 											<td><?= $value->nm_produk ?></td>
 											<td><?= $value->jumlah ?></td>
 											<td><?= $value->satuan ?></td>
 											<td><?= number_format($value->harga) ?></td>
-											<td><?= number_format($value->diskon) ?></td>
+											<td><?= number_format($value->diskon) ?>%</td>
 											<td><?= number_format($value->total) ?></td>
-											<td><?= $value->metode ?></td>
-											<td><?= $value->catatan ?></td>
 											<td><?= $value->admin ?></td>
 										</tr>
 									<?php endforeach ?>
@@ -114,6 +113,40 @@
 						</div>
 					</div>
 				</form>
+
+				<form action="<?= base_url('Match/summary_penjualan_produk'); ?>" method="post">
+					<div class="modal fade" id="modal-summary">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header" style="background:#FFA07A;">
+									<h4 class="modal-title">Export Summary</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<table>
+											<tr>
+												<td ><label for="">Tanggal</label></td>
+												<td>:</td>
+												<td> <input style="width: 350px;" class="form-control" type="input" value="<?= date("Y-m-d"); ?>" name="tanggal" id="picker2"></td>
+											</tr>
+										</table>
+
+										<input class="form-control" type="date" value="" id="tanggal3" name="tgl_list_penjualan1" hidden>  
+										<input class="form-control" type="date" value="" id="tanggal4" name="tgl_list_penjualan2" hidden> 
+									</div>
+									<div class="modal-footer justify-content-between">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn" style="background:#FFA07A;">Lanjutkan</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+
 	<script>
 		function autofill_anak(){
 			var nm_kry = document.getElementById('nm_kry').value;

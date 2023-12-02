@@ -35,7 +35,7 @@
 			<div class="card-header">
 				<div class="col-12">
 					<?= $this->session->flashdata('message'); ?>
-					<table id="example2" class="table table-striped table-bordered" width="100%">
+					<table id="example2" class="table" width="100%">
 						<thead>
 							<tr>
 								<th>No</th>

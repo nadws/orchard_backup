@@ -35,7 +35,7 @@
 								<th>NAMA PRODUK</th>
 								<th>JUMLAH</th>    
 								<th>HARGA BELI</th>
-								<th>HARGA JUAL</th>
+								<!-- <th>HARGA JUAL</th> -->
 								<th>AKSI</th>
 							</tr>
 						</thead>
@@ -53,7 +53,7 @@
 								    </td>
 									<td><input style="border:none; border-bottom: solid;" value="<?= $produk_masuk['jumlah'] ?>" class="form-control" type="number" name="jumlah" required></td>
 									<td><input style="border:none; border-bottom: solid;" value="<?= $produk_masuk['hrg_beli'] ?>" class="form-control" type="number" name="hrg_beli" required></td>
-									<td><input style="border:none; border-bottom: solid;" value="<?= $produk_masuk['hrg_jual'] ?>" class="form-control" type="number" name="hrg_jual" required></td>
+									<!-- <td><input style="border:none; border-bottom: solid;" value="<?= $produk_masuk['hrg_jual'] ?>" class="form-control" type="number" name="hrg_jual" required></td> -->
 									<td>
 										<button type="submit" class="btn btn-primary btn-sm">Simpan</button>
 									</td>

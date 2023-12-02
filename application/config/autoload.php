@@ -39,7 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |  $autoload['packages'] = array(APPPATH.'third_party', '/usr/local/shared');
 |
 */
-$autoload['packages'] = array('http://localhost/Orchard/');
+$autoload['packages'] = array('https://coba.putrirembulan.com/');
 
 /*
 | -------------------------------------------------------------------
@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'file', 'text', 'string','security');
+$autoload['helper'] = array('url', 'file', 'text', 'string','security','form');
 
 /*
 | -------------------------------------------------------------------

@@ -64,7 +64,7 @@
 					</thead>
 					<tbody style="text-align: center;">
 						<?php foreach ($produk as $k): ?>
-                            <?php $selisih = $k->stok -  $k->stok_nyata;?>
+                            <?php $selisih =  $k->stok_nyata - $k->stok;?>
                             <tr <?php if($selisih < 0): ?>
                                class="text-danger"
 							<?php endif; ?>>
@@ -81,7 +81,7 @@
                                 <td><?= $selisih; ?></td>
                                 
 									<td>
-                                    <button class="btn btn-primary mb-2" type="submit">Edit</button>
+                                    <button class="btn btn-primary mb-2" type="submit" >Edit</button>
                                         </form>
 									</td>
 								</tr>

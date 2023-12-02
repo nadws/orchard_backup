@@ -8,11 +8,11 @@
   <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
-  <footer class="main-footer shadow" style=" background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);">
-  <div class="float-right d-none d-sm-inline" style="color: white;" >
+  <footer class="main-footer shadow" style=" background:#fadadd;">
+  <div class="float-right d-none d-sm-inline"  >
             Anything you want
           </div>
-    <strong style="color: white;">Copyright &copy; 2020.09.29 <a href="<?= 'https:www.putrirembulan.com'; ?>" target="" style="color: white;">putrirembulan.com</a></strong>
+    <strong >Copyright &copy; 2020.09.29 <a href="<?= 'https:www.putrirembulan.com'; ?>" target="" style="color: #787878;">putrirembulan.com</a></strong>
   </footer>
 </div>
 <!-- ./wrapper -->
@@ -95,6 +95,7 @@
 
           $(document).on('submit', '.input_cart', function(event){  
            event.preventDefault();
+           var sku = $("#cart_sku").val();
            var id_produk = $("#cart_id_produk").val();
             var jumlah = $("#cart_jumlah").val();
             var satuan = $("#cart_satuan").val();
@@ -108,14 +109,26 @@
                      processData:false,  
                      success:function(data)  
                      {  
-                      Swal.fire({
+                      if(data == 'kosong'){
+                        Swal.fire({
                         toast: true,
                         position: 'top-end',
                         showConfirmButton: false,
                         timer: 3000,
-                        icon: 'success',
-                        title: 'Item masuk kedalam keranjang'
+                        icon: 'error',
+                        title: 'Stok tidak cukup'
                       });
+                      }
+                      if(data == 'null'){
+                        Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        icon: 'error',
+                        title: 'Data penjual belum diisi'
+                      });
+                      }
                       $('#cart_session').html(data);
                       $('.modal-cart').modal('hide');
                       load_cart();
@@ -186,6 +199,61 @@
                 });
             });
 
+            $(document).on('click','.plus_cart_app', function(event){
+              var rowid = $(this).attr("id");
+              var qty = $(this).attr("qty");
+              $.ajax({  
+                     url:"<?= base_url(); ?>match/plus_cart_app/",  
+                     method:"POST",
+                     data:{rowid:rowid,qty:qty},  
+                     success:function(data)  
+                     {                               
+                      load_cart(); 
+                     }  
+                });
+            });
+
+
+            $(document).on('click','.min_kry', function(event){
+              var rowid = $(this).attr("rowid");
+              var key = $(this).attr("key");
+              $.ajax({  
+                     url:"<?= base_url(); ?>match/min_kry/",  
+                     method:"POST",
+                     data:{rowid:rowid, key:key},  
+                     success:function(data)  
+                     {  
+                      // $('#cart_session').html(data); 
+                      load_cart(); 
+                     }  
+                });
+            });
+
+            $(document).on('click','.diskon_servis', function(event){
+              var rowid = $(this).attr("id_cart");
+              var price_cart = $(this).attr("price_cart");
+
+              $('#id_cart').val(rowid);
+              $('#price_cart').val(price_cart);
+            });
+
+            $(document).on('submit', '#diskon_servis', function(event){  
+           event.preventDefault();
+              $.ajax({  
+                     url:"<?php echo base_url('match/tambah_diskon_cart'); ?>",  
+                     method:'POST',  
+                     data:new FormData(this),  
+                     contentType:false,  
+                     processData:false,  
+                     success:function(data)  
+                     {  
+                      $('#discon_servis').modal('hide');
+                      load_cart();
+                      // alert(data);
+                     }  
+                });        
+            });
+
 
         });
 
@@ -208,6 +276,8 @@
           })
         })
       });
+
+      
 
         // $(document).ready(function(){
         //   load_data();
@@ -260,6 +330,21 @@
 
             document.getElementById("tanggal1").value = picker.startDate.format('YYYY-MM-DD');
             document.getElementById("tanggal2").value = picker.endDate.format('YYYY-MM-DD');
+          });
+        });
+
+        $(function() {
+          $("input[name='picker_excel']").daterangepicker({
+            opens: 'center',
+            drops: 'up'
+          }, function(start, end, label) {
+
+          });
+          $('#picker_excel').daterangepicker();
+          $('#picker_excel').on('apply.daterangepicker', function(ev, picker) {
+
+            document.getElementById("tgl1").value = picker.startDate.format('YYYY-MM-DD');
+            document.getElementById("tgl2").value = picker.endDate.format('YYYY-MM-DD');
           });
         });
 
@@ -368,6 +453,15 @@
           });
         });
 
+
+        $(function () {
+             $('.select').select2()
+
+             $('.select2bs4').select2({
+              theme: 'bootstrap4'
+            })
+           });
+
         $(function () {
           $("#example1").DataTable({ 
 
@@ -377,6 +471,47 @@
         "paging" : true,
         "stateSave" : true,
         "scrollCollapse" : true
+      });
+      
+      $("#bulanan").DataTable({ 
+
+            "responsive": true,
+            "bSort": true,
+        // "scrollX": true,
+        "paging" : false,
+        "stateSave" : true,
+        "scrollCollapse" : true
+      });
+
+      // $("#neraca_saldo").DataTable({ 
+
+      // "responsive": true,
+      // "bSort": true,
+      // "paging" : true,
+      // "stateSave" : true,
+      // "scrollCollapse" : true,
+      // "order": [[ 1, "ASC" ]]
+      // });
+
+      $("#tb_akun").DataTable({ 
+
+        "responsive": true,
+        "bSort": true,
+        // "scrollX": true,
+        "paging" : true,
+        "stateSave" : true,
+        "scrollCollapse" : true,
+        "fixedHeader": true
+        });
+
+      $('#pengeluaran').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "ordering": true,
+            "info": true,
+            "stateSave" : true,
+            "autoWidth": true,
+
       });
 
           $('#produkmasuk').DataTable({
@@ -390,16 +525,32 @@
         // "searching": false,
       });
 
-      $('#produk').DataTable({
-            "paging": true,
-            "lengthChange": true,
-            "ordering": true,
-            "info": true,
-            "stateSave" : true,
-            "autoWidth": true,
+      
+       $('#tb_servis').DataTable({
+        "paging": false,
+        "pageLength": 100,
+        "scrollY": "350px",
+        "lengthChange": false,
+        "ordering": false,
+        "info": false,
+        "stateSave": true,
+        "autoWidth": true,
         // "order": [ 5, 'DESC' ],
         // "searching": false,
       });
+
+    //   $('#produk').DataTable({
+    //   "paging": false,
+    //   "pageLength": 100,
+    //   "scrollY": "350px",
+    //   "lengthChange": false,
+    //   "ordering": false,
+    //   "info": false,
+    //   "stateSave": true,
+    //   "autoWidth": true,
+    //   // "order": [ 5, 'DESC' ],
+    //   // "searching": false,
+    // });
 
           $('#example3').DataTable({
             "paging": true,
@@ -436,6 +587,83 @@
 
         });
 
+      //   $(document).ready(function() {
+      //     var table = $('#pengeluaran').DataTable( {
+      //         fixedHeader: {
+      //             header: true,
+      //             footer: true
+      //         }
+      //     } );
+      // } );  
+
       </script>
+
+<script>
+  (function(document) {
+    'use strict';
+
+    var LightTableFilter = (function(Arr) {
+
+      var _input;
+      var _select;
+
+      function _onInputEvent(e) {
+        _input = e.target;
+        var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+        Arr.forEach.call(tables, function(table) {
+          Arr.forEach.call(table.tBodies, function(tbody) {
+            Arr.forEach.call(tbody.rows, _filter);
+          });
+        });
+      }
+
+      function _onSelectEvent(e) {
+        _select = e.target;
+        var tables = document.getElementsByClassName(_select.getAttribute('data-table'));
+        Arr.forEach.call(tables, function(table) {
+          Arr.forEach.call(table.tBodies, function(tbody) {
+            Arr.forEach.call(tbody.rows, _filterSelect);
+          });
+        });
+      }
+
+      function _filter(row) {
+
+        var text = row.textContent.toLowerCase(),
+          val = _input.value.toLowerCase();
+        row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+
+      }
+
+      function _filterSelect(row) {
+
+        var text_select = row.textContent.toLowerCase(),
+          val_select = _select.options[_select.selectedIndex].value.toLowerCase();
+        row.style.display = text_select.indexOf(val_select) === -1 ? 'none' : 'table-row';
+
+      }
+
+      return {
+        init: function() {
+          var inputs = document.getElementsByClassName('light-table-filter');
+          var selects = document.getElementsByClassName('select-table-filter');
+          Arr.forEach.call(inputs, function(input) {
+            input.oninput = _onInputEvent;
+          });
+          Arr.forEach.call(selects, function(select) {
+            select.onchange = _onSelectEvent;
+          });
+        }
+      };
+    })(Array.prototype);
+
+    document.addEventListener('readystatechange', function() {
+      if (document.readyState === 'complete') {
+        LightTableFilter.init();
+      }
+    });
+
+  })(document);
+</script>
     </body>
     </html>

@@ -23,7 +23,7 @@ header("Content-Disposition: attachment; filename=$file");
 			?>
 			<tr>
 				<td><?= $k->nm_denda; ?></td>
-				<td><?= number_format($k->total, 0) ?></td>
+				<td><?= $k->total ?></td>
 				<td style="width: 150px;"><?= $k->alasan ?></td>
 			</tr>
 		<?php endforeach ?>
@@ -31,7 +31,7 @@ header("Content-Disposition: attachment; filename=$file");
 	<tfoot>	
 		<tr>	
 			<th>TOTAL</th>
-			<th><?= number_format($ttl, 0); ?></th>
+			<th><?= $ttl; ?></th>
 			<th></th>
 		</tr>
 	</tfoot>

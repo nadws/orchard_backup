@@ -33,7 +33,7 @@
 			<div class="card-header">
 				<div class="col-12">
 					<?= $this->session->flashdata('message'); ?>
-					<table id="example2" class="table table-striped table-bordered" width="100%">
+					<table id="example2" class="table" width="100%">
 						<thead>
 							<tr>
 								<th>No</th>
@@ -72,16 +72,11 @@
 									<td><?= $k->nm_denda; ?></td>
 									<td><?= $k->alasan ?></td>
 									<td><?= number_format($k->nominal, 0) ?></td>
-									<?php if ($this->session->userdata('id_role') == 1): ?>
-										<td>
-											<a href="<?= base_url('Match/edit_denda/').$k->id_denda; ?>"><div class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></div></a>
-											<a onclick="return confirm('Yakin Hapus?')" href="<?= base_url('Match/drop_denda/').$k->id_denda; ?>"><div class="btn btn-danger btn-sm tombolhps" ><i class="fas fa-trash"></i></div></a>
-										</td>
-										<?php elseif($k->tanggal == date('Y-m-d')): ?>
-											<td>
-												<a href="<?= base_url('Match/edit_denda/').$k->id_denda; ?>"><div class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></div></a>
-												<a onclick="return confirm('Yakin Hapus?')" href="<?= base_url('Match/drop_denda/').$k->id_denda; ?>"><div class="btn btn-danger btn-sm tombolhps" ><i class="fas fa-trash"></i></div></a>
-											</td>
+									        <?php if ($this->session->userdata('id_role') == 1): ?>
+    										<td>
+    											<a href="<?= base_url('Match/edit_denda/').$k->id_denda; ?>"><div class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></div></a>
+    											<a onclick="return confirm('Yakin Hapus?')" href="<?= base_url('Match/drop_denda/').$k->id_denda; ?>"><div class="btn btn-danger btn-sm tombolhps" ><i class="fas fa-trash"></i></div></a>
+    										</td>
 											<?php else: ?>
 												<td></td>
 											<?php endif ?>

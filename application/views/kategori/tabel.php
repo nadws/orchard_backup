@@ -58,7 +58,9 @@
 									<td><?= $k->nm_kategori; ?></td>
 									<td>
 									<a href="<?= base_url("Match/edit_kategori/"). $k->id_kategori; ?>"><div class="btn btn-warning btn-sm tomboledit"><i class="fas fa-edit"></i></div></a>
+									<?php if ($this->session->userdata('id_role')=='1'): ?>   
 									<a href="<?= base_url() ?>match/drop_kategori/<?= $k->id_kategori ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin ?')"><i class="fa fa-trash"></i></a>
+									<?php endif; ?>
 									</td>
 								</tr>
 								<?php $i++; endforeach ?>

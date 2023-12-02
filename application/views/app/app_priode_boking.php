@@ -664,7 +664,7 @@ foreach ($d_order_d as $key => $value)
             // --------------------------- Example 2 ---------------------------
             var sked2Config = {
               caption: 'Terapis',
-              start: custom(10, 0),
+              start: custom(8, 0),
               end: custom(18, 0),
               showEventTime: true,
               showEventDuration: true,

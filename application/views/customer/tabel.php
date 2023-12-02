@@ -62,7 +62,7 @@ $today = date('Y-m-d');
   </div>
   <button type="submit" class="btn btn-warning mb-2" style="background:#FFA07A;border-color:#FFA07A;"> Submit</button>
 </form><br>
-			<table class="table table-bordered table-striped" id="example1">
+			<table class="table" id="example1">
 				<thead>
 					<tr>
 						<th>No. </th>

@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="<?= base_url('asset/'); ?>ambil/apis.css">
   <link rel="stylesheet" href="<?= base_url('asset/'); ?>popover.js">
   <link rel="icon" type="image/png" href="<?= base_url('asset/');  ?>orchard_small.png"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">
 
 
   <script>

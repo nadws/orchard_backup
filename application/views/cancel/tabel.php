@@ -17,11 +17,12 @@ $today = date('Y-m-d');
 				</div>
 				<div class="col-sm-6">
 					<button data-toggle="modal" data-target="#modal-summary" class="btn btn-success"><i class="fas fa-print"></i> Summary</button>
+					<button data-toggle="modal" data-target="#filter_tgl" class="btn btn-success"><i class="fas fa-eye"></i> View</button>
 				</div>
 			</div>
 		</div><br>
 		<div class="container">
-			<table class="table table-bordered table-striped" id="example1">
+			<table class="table" id="example1">
 				<thead>
 					<tr>
 						<th>No. </th>
@@ -113,6 +114,39 @@ $today = date('Y-m-d');
 			</div>
 		</div>
 	</form>
+
+	<form action="<?= base_url('Match/cancel'); ?>" method="post">
+					<div class="modal fade" id="filter_tgl">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header" style="background:#FFA07A;">
+									<h4 class="modal-title">View Data</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<table>
+											<tr>
+												<td ><label for="">Tanggal</label></td>
+												<td>:</td>
+												<td> <input style="width: 350px;" class="form-control" type="input" value="<?= date("Y-m-d"); ?>" name="tanggal" id="picker"></td>
+											</tr>
+										</table>
+
+										<input class="form-control" type="date" value="" id="tanggal1" name="tgl1" hidden>  
+										<input class="form-control" type="date" value="" id="tanggal2" name="tgl2" hidden> 
+									</div>
+									<div class="modal-footer justify-content-between">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn" style="background:#FFA07A;">Lanjutkan</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
 
 
 	<!-- ======================================================== conten ======================================================= -->
