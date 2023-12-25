@@ -8358,7 +8358,10 @@ function summary_denda(){
     $data = array(
         'tgl1'      => $tgl1,
         'tgl2'      => $tgl2,
-        'denda'     => $this->M_salon->summary_denda($tgl1, $tgl2),
+        'denda'     => $this->db->query("SELECT a.nm_denda, SUM(a.nominal) as total, GROUP_CONCAT(a.alasan) as alasan
+        FROM ctt_denda as a
+        WHERE a.tanggal BETWEEN '$tgl1' AND '$tgl2'
+        GROUP BY a.nm_denda"),
         'sort'      => date('d-M-y', strtotime($tgl1))." ~ ".date('d-M-y', strtotime($tgl2))
     );
 
